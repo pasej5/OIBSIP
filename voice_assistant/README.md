@@ -16,6 +16,10 @@ This project involves developing a Voice Assistant with voice recognition and co
 
 **Install dependences:**
 
+sudo apt-get update
+
+sudo apt-get install portaudio19-dev
+
 pip install pyaudio
 
 pip install playsound
