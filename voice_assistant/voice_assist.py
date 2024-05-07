@@ -3,7 +3,7 @@
 
 import os
 import time
-from playsound import playsound
+import playsound
 import speech_recognition as sr
 from gtts import gTTS
 
@@ -12,4 +12,8 @@ def speak(text):
     filename = "voice.mp3"
     tts.save(filename)
     playsound.playsound(filename)
+    
+def get_audio():
+    pass
+
 speak("Hello Jay")

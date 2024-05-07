@@ -27,3 +27,8 @@ pip install playsound
 pip install gTTs
 
 pip install SpeechRecognition
+
+### ALSO SET "Preferences: Open Settings (JSON)"
+
+to
+"python.languageServer": "Jedi"
