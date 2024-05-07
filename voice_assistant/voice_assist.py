@@ -1,19 +1,13 @@
-#!/usr/bin/python3
-"""voice assistant"""
-
-import os
-import time
-import playsound
-import speech_recognition as sr
 from gtts import gTTS
+from pydub import AudioSegment
+from pydub.playback import play
 
 def speak(text):
     tts = gTTS(text=text, lang="en")
     filename = "voice.mp3"
     tts.save(filename)
-    playsound.playsound(filename)
-    
-def get_audio():
-    pass
+    sound = AudioSegment.from_file(filename, format="mp3")
+    play(sound)
 
-speak("Hello Jay")
+text_to_speak = "Hello, this is your voice assistant speaking."
+speak(text_to_speak)
