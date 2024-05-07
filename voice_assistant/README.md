@@ -13,3 +13,13 @@ This project involves developing a Voice Assistant with voice recognition and co
    git clone https://github.com/your-username/voice-assistant.git
    cd voice-assistant
    ```
+
+**Install dependences:**
+
+pip install pyaudio
+
+pip install playsound
+
+pip install gTTs
+
+pip install SpeechRecognition
