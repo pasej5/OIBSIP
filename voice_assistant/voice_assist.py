@@ -1,6 +1,7 @@
 from gtts import gTTS
 from pydub import AudioSegment
 from pydub.playback import play
+import speech_recognition as sr
 
 def speak(text):
     tts = gTTS(text=text, lang="en")
@@ -9,5 +10,19 @@ def speak(text):
     sound = AudioSegment.from_file(filename, format="mp3")
     play(sound)
 
-text_to_speak = "Hello, this is your voice assistant speaking."
-speak(text_to_speak)
+def get_audio():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = r.listen(source)
+        said = ""
+        
+        try:
+            said = r.recognize_google(audio)
+        except Exception as e:
+            print("Exception: " + str(e))
+            
+    return said
+
+# text_to_speak = "Hello, this is your voice assistant speaking."
+speak("hello")
+print(get_audio())
