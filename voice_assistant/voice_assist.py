@@ -24,5 +24,13 @@ def get_audio():
     return said
 
 # text_to_speak = "Hello, this is your voice assistant speaking."
-speak("hello")
-print(get_audio())
+# speak("hello")
+# print(get_audio())
+
+text = get_audio()
+
+if "hello" in text:
+    speak("hello, you are blessed")
+    
+if "what is your name" in text:
+    speak("My name is Matsika")
