@@ -14,14 +14,14 @@ def get_audio():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         audio = r.listen(source)
-        said = ""
+        voice_data = ""
         
         try:
-            said = r.recognize_google(audio)
+            voice_data = r.recognize_google(audio)
         except Exception as e:
             print("Exception: " + str(e))
             
-    return said
+    return voice_data
 
 # text_to_speak = "Hello, this is your voice assistant speaking."
 # speak("hello")
