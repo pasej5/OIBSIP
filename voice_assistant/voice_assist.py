@@ -1,76 +1,71 @@
 import speech_recognition as sr
 import webbrowser
 import time
-import playsound
+from gtts import gTTS
 import os
 import random
-from gtts import gTTS
-
-
+from pydub import AudioSegment
+from pydub.playback import play
 
 def get_audio(prompt=False):
     r = sr.Recognizer()
     with sr.Microphone() as source:
         if prompt:
-            print(prompt)
+            speak(prompt)
         else:
             print('Dont be shy say something')
         audio = r.listen(source)
         voice_data = ""
-        
+
         try:
             voice_data = r.recognize_google(audio)
         except sr.UnknownValueError:
-            print("Sorry, I didn't catch that. Could you please repeat?")
+            speak("Sorry, I didn't catch that. Could you please repeat?")
         except sr.RequestError:
-            print("Sorry, I'm unable to process that request right now.")
-            
+            speak("Sorry, I'm unable to process that request right now.")
+
         return voice_data
 
-# def speak
+def speak(audio_string):
+    tts = gTTS(text=audio_string, lang="en")
+    r = random.randint(1, 1000000)
+    audio_file = 'audio-' + str(r) + '.mp3'
+    tts.save(audio_file)
+    sound = AudioSegment.from_file(audio_file, format="mp3")
+    play(sound)
+    os.remove(audio_file)
 
 def respond(voice_data):
     voice_data = voice_data.lower()
     if "hello" in voice_data:
-        print("Hello! How can I assist you today")
+        speak("Hello! How can I assist you today")
     elif "what is your name" in voice_data:
-        print("My name is Matsika")
+        speak("My name is Matsika")
     elif "what time is it" in voice_data:
-        print(f"The current time is {time.strftime('%I:%M %p')}")
-        
+        speak(f"The current time is {time.strftime('%I:%M %p')}")
     elif "search" in voice_data:
         search_query = get_audio("What would you like to search for?")
         if search_query:
-            
-            chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe" 
+            chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
             url = 'https://google.com/search?q=' + search_query
-
             webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
             webbrowser.get('chrome').open(url)
-            print(f"This is what i found for '{search_query} '")
-            
+            speak(f"This is what i found for '{search_query} '")
     elif "find location" in voice_data:
         location = get_audio("What is the location?")
         url = 'https://google.nl/maps/place/' + location + '/&amp;'
         chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe'
         webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(chrome_path))
         webbrowser.get('chrome').open(url)
-        print("This is what i found for " + location)
-
-        
+        speak("This is what i found for " + location)
     elif "exit" in voice_data:
         exit()
-
-        
     else:
-        print("I'm not sure how to respond to that.")
+        speak("I'm not sure how to respond to that.")
 
 time.sleep(1)
-print("Hello! How can I assist you today")
+speak("Hello! How can I assist you today")
 
-while 1:
+while True:
     voice_data = get_audio()
     respond(voice_data)
-
-
-   
