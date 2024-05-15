@@ -1,10 +1,13 @@
 import speech_recognition as sr
+import webbrowser
 import time
 
-def get_audio():
+def get_audio(ask = False):
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print('How can I help you today?')
+        if ask:
+            print(ask)
         audio = r.listen(source)
         voice_data = ""
         
@@ -22,6 +25,12 @@ def respond(voice_data):
         print("My name is Matsika")
     elif "what time is it" in voice_data.lower():
         print(f"The current time is {time.strftime('%I:%M %p')}")
+    elif "search" in voice_data:
+        search = get_audio("what are we serching today")
+        url = 'https://google.com/search?q=' + search 
+        webbrowser.get().open(url)
+        print("This is what i found for") + search
+        
     else:
         print("I'm not sure how to respond to that.")
 
